@@ -51,6 +51,6 @@ def InsertGuest(id, first, last):
 def DeleteGuest(id):
     session = connector.get_sql_session()
     row = session.query(Guests).filter(id == id).first()
-    session.add(row)
+    session.delete(row)
     session.commit()
     session.close()
