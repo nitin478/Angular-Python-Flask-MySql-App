@@ -23,6 +23,6 @@ class SqlConnector(object):
     def get_sql_session(self):
         """Creates and returns a SQL session."""
         session_maker_obj = sessionmaker(bind=self._engine,
-                                         expire_on_commit=False)
+                                         expire_on_commit=True)
         session = session_maker_obj()
         return session
