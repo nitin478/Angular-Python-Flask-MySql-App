@@ -66,6 +66,7 @@ def insert():
 def delete():
     r = json.loads(request.get_data())
     model.DeleteGuest(r['id'])
+    return json.dumps(r)
 
 
 
