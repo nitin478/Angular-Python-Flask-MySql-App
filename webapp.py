@@ -5,11 +5,9 @@ import random
 
 app = Flask(__name__, static_url_path='')
 
+
 def AsDict(guest):
   return {'id': guest.id, 'first': guest.first, 'last': guest.last}
-
-
-
 
 
 @app.route('/')
@@ -42,14 +40,12 @@ def get_all():
     return json.dumps(r)
 
 
-
 @app.route('/rest/update', methods=['POST'])
 def update():
     r = json.loads(request.get_data())
     guest = model.UpdateGuest(r['id'], r['first'], r['last'])
     r = AsDict(guest)
     return json.dumps(r)
-
 
 
 @app.route('/rest/insert', methods=['POST'])
@@ -60,11 +56,12 @@ def insert():
     r = AsDict(guest)
     return json.dumps(r)
 
+
 @app.route('/rest/delete', methods=['POST'])
 def delete():
     r = json.loads(request.get_data())
-    model.DeleteGuest(r['id'])
-    return json.dumps(r)
+    guest = model.DeleteGuest(r['id'])
+    return json.dumps(AsDict(guest))
 
 
 if __name__ == '__main__':

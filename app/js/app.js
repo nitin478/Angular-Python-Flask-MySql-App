@@ -65,14 +65,17 @@ App.controller('MainCtrl', function($scope, $rootScope, $log, $http, $routeParam
   $scope.delete = function(guest) {
     $rootScope.status = 'Deleting guest ' + guest.id + '...';
     $http.post('/rest/delete', {'id': guest.id})
-    .success(function(data, status, headers, config) {
-            $route.reload();
+     .success(function(data, status, headers, config) {
+        for (var i=0; i<$rootScope.guests.length; i++) {
+          if ($rootScope.guests[i].id == data.id) {
+            $rootScope.guests.splice(i,1);
+            break;
+          }
         }
-      }
+      $location.path('/');
       $rootScope.status = '';
     });
   };
-
 });
 
 App.controller('InsertCtrl', function($scope, $rootScope, $log, $http, $routeParams, $location, $route) {
@@ -104,13 +107,7 @@ App.controller('UpdateCtrl', function($routeParams, $rootScope, $scope, $log, $h
     $rootScope.status = 'Updating...';
     $http.post('/rest/update', $scope.guest)
     .success(function(data, status, headers, config) {
-      for (var i=0; i<$rootScope.guests.length; i++) {
-        if ($rootScope.guests[i].id == $scope.guest.id) {
-          $rootScope.guests.splice(i,1);
-          break;
-        }
-      }
-      $rootScope.guests.push(data);
+      $window.location.reload();
       $rootScope.status = '';
     });
     $location.path('/');
