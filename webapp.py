@@ -37,10 +37,8 @@ def send_css(path):
 
 @app.route('/rest/query')
 def get_all():
-    print '111'
     guests = model.AllGuests()
-    print '2222'
-    r = [ AsDict(guest) for guest in guests ]
+    r = [AsDict(guest) for guest in guests ]
     return json.dumps(r)
 
 
@@ -67,10 +65,6 @@ def delete():
     r = json.loads(request.get_data())
     model.DeleteGuest(r['id'])
     return json.dumps(r)
-
-
-
-
 
 
 if __name__ == '__main__':

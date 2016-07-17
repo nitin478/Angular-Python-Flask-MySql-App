@@ -66,10 +66,7 @@ App.controller('MainCtrl', function($scope, $rootScope, $log, $http, $routeParam
     $rootScope.status = 'Deleting guest ' + guest.id + '...';
     $http.post('/rest/delete', {'id': guest.id})
     .success(function(data, status, headers, config) {
-      for (var i=0; i<$rootScope.guests.length; i++) {
-        if ($rootScope.guests[i].id == guest.id) {
-          $rootScope.guests.splice(i, 1);
-          break;
+            $route.reload();
         }
       }
       $rootScope.status = '';
