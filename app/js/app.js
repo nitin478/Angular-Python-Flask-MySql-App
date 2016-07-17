@@ -107,7 +107,13 @@ App.controller('UpdateCtrl', function($routeParams, $rootScope, $scope, $log, $h
     $rootScope.status = 'Updating...';
     $http.post('/rest/update', $scope.guest)
     .success(function(data, status, headers, config) {
-      $window.location.reload();
+      for (var i=0; i<$rootScope.guests.length; i++) {
+        if ($rootScope.guests[i].id == $scope.guest.id) {
+          $rootScope.guests.splice(i,1);
+          break;
+        }
+      }
+      $rootScope.guests.push(data);
       $rootScope.status = '';
     });
     $location.path('/');
